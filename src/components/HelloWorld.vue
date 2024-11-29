@@ -1,7 +1,7 @@
 <template>
   <h4 class="small">{{ t('subtitle') }}</h4>
 
-  <article class="orange">
+  <article class="border orange-border">
     <details>
       <summary class="bold large-text">
         {{ t('warning.title') }}

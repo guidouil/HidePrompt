@@ -72,6 +72,7 @@ function getRandomItem<T>(array: readonly T[]): T {
 const prompt = ref(getRandomItem(currentPrompts.value.visible))
 const hide = ref(getRandomItem(currentPrompts.value.hidden))
 const hiddenPrompt = ref('')
+const htmlPrompt = ref('')
 const selectedStyle = ref('mathematical')
 
 // Différents styles de caractères UTF-8
@@ -302,6 +303,57 @@ watch(locale, () => {
   prompt.value = getRandomItem(currentPrompts.value.visible)
   hide.value = getRandomItem(currentPrompts.value.hidden)
 })
+
+// Ajout des styles de couleurs
+const HTML_STYLES = {
+  white: {
+    name: t('styles.html.white'),
+    color: '#FFFFFF',
+    background: '#FFFFFF'
+  },
+  lightgray: {
+    name: t('styles.html.lightgray'),
+    color: '#F0F0F0',
+    background: '#F0F0F0'
+  },
+  gray: {
+    name: t('styles.html.gray'),
+    color: '#808080',
+    background: '#808080'
+  },
+  black: {
+    name: t('styles.html.black'),
+    color: '#000000',
+    background: '#000000'
+  }
+} as const
+
+const selectedHtmlStyle = ref('white')
+
+// Fonction pour encoder en HTML
+function encodeHtml(text: string, style: keyof typeof HTML_STYLES): string {
+  const { color, background } = HTML_STYLES[style]
+  return `<span style="color: ${color}; background-color: ${background};">${text}</span>`
+}
+
+// Mise à jour du HTML quand nécessaire
+function updateHtmlPrompt() {
+  if (prompt.value === '' || hide.value === '') {
+    htmlPrompt.value = ''
+    return
+  }
+
+  const hideWithoutAccents = removeAccents(hide.value)
+  const encodedHtml = encodeHtml(hideWithoutAccents, selectedHtmlStyle.value as keyof typeof HTML_STYLES)
+  htmlPrompt.value = `${prompt.value} ${encodedHtml}`
+}
+
+// Surveiller les changements pour le HTML aussi
+watch([prompt, hide, selectedHtmlStyle], updateHtmlPrompt, { immediate: true })
+
+function copyHtmlPrompt() {
+  navigator.clipboard.writeText(htmlPrompt.value)
+}
 </script>
 
 <template>
@@ -316,35 +368,61 @@ watch(locale, () => {
       <label for="hide">{{ t('form.hiddenText.label') }}</label>
       <span class="helper">{{ t('form.hiddenText.helper') }}</span>
     </div>
-    <button class="small-round right-round extra border"
-        @click="randomHide()"><i>shuffle</i></button>
-  </div>
-  <div class="space"></div>
-
-  <div class="field small-round label border large suffix">
-    <select v-model="selectedStyle" id="style" name="style">
-      <option v-for="(style, key) in CHAR_STYLES" :key="key" :value="key">
-        {{ style.name }}
-      </option>
-    </select>
-    <label for="style">{{ t('form.style.label') }}</label>
-    <i>arrow_drop_down</i>
-    <span class="helper">{{ t('form.style.helper') }}</span>
-  </div>
-  <div class="large-divider"></div>
-
-  <div class="field small-round textarea label border extra">
-    <textarea rows="10" id="hiddenPrompt" name="hiddenPrompt" v-model="hiddenPrompt" readonly></textarea>
-    <label for="hiddenPrompt">{{ t('form.result.label') }}</label>
-    <span class="helper">{{ t('form.result.helper') }}</span>
+    <button class="small-round right-round extra border" @click="randomHide()"><i>shuffle</i></button>
   </div>
 
   <div class="large-space"></div>
-  <button class="small-round responsive extra small-elevate no-margin"
-    :disabled="!hiddenPrompt"
-    @click="copyHiddenPrompt">{{ t('form.copy') }}</button>
 
-  <p class="helper center-align">
-    {{ t('form.tip') }}
-  </p>
+  <div>
+    <div class="tabs">
+      <a class="active" data-ui="#textTab">{{ t('form.text.tab') }}</a>
+      <a data-ui="#htmlTab">{{ t('form.html.tab') }}</a>
+    </div>
+    <div class="page padding active" id="textTab">
+      <div class="field small-round label border large suffix">
+        <select v-model="selectedStyle" id="style" name="style">
+          <option v-for="(style, key) in CHAR_STYLES" :key="key" :value="key">
+            {{ style.name }}
+          </option>
+        </select>
+        <label for="style">{{ t('form.style.label') }}</label>
+        <i>arrow_drop_down</i>
+        <span class="helper">{{ t('form.style.helper') }}</span>
+      </div>
+      <div class="field small-round textarea label border extra">
+        <textarea rows="10" id="hiddenPrompt" name="hiddenPrompt" v-model="hiddenPrompt" readonly></textarea>
+        <label for="hiddenPrompt">{{ t('form.result.label') }}</label>
+        <span class="helper">{{ t('form.result.helper') }}</span>
+      </div>
+      <button class="small-round responsive extra small-elevate no-margin" :disabled="!hiddenPrompt"
+        @click="copyHiddenPrompt">{{ t('form.text.copy') }}</button>
+      <p class="helper center-align">
+        {{ t('form.tip') }}
+      </p>
+    </div>
+    <div class="page padding" id="htmlTab">
+      <div class="field small-round label border large suffix">
+        <select v-model="selectedHtmlStyle" id="htmlStyle" name="htmlStyle">
+          <option v-for="(style, key) in HTML_STYLES" :key="key" :value="key">
+            {{ style.name }}
+          </option>
+        </select>
+        <label for="htmlStyle">{{ t('form.html.style.label') }}</label>
+        <i>arrow_drop_down</i>
+        <span class="helper">{{ t('form.html.style.helper') }}</span>
+      </div>
+      <div class="field small-round textarea label border extra">
+        <textarea rows="10" id="htmlPrompt" name="htmlPrompt" v-model="htmlPrompt" readonly></textarea>
+        <label for="htmlPrompt">{{ t('form.result.label') }}</label>
+        <span class="helper">{{ t('form.result.helper') }}</span>
+      </div>
+      <button class="small-round responsive extra small-elevate no-margin" :disabled="!htmlPrompt"
+        @click="copyHtmlPrompt">{{ t('form.html.copy') }}</button>
+    </div>
+
+  </div>
+
+
+
+
 </template>

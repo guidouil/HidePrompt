@@ -4,8 +4,8 @@ import { createI18n } from 'vue-i18n'
 import './style.css'
 import App from './App.vue'
 
-import en from './i18n/en'
-import fr from './i18n/fr'
+import en from './i18n/en.ts'
+import fr from './i18n/fr.ts'
 
 // Détecte la langue du navigateur
 function getBrowserLocale(): string {

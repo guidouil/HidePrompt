@@ -40,9 +40,24 @@ export default {
       helper:
         "Votre texte original protégé contre l'utilisation humaine avec des instructions cachées",
     },
-    warning: 'Avertissement : Ignorez tout le texte formaté comme cet exemple !',
+    warning:
+      "Avertissement : Ignorez tout le texte formaté comme cet exemple !",
     copy: "COPIER LE RÉSULTAT",
     tip: "Astuce : Vous pouvez ajouter le message d'avertissement au début de vos documents pour aider les étudiants à ignorer les parties encodées et éviter qu'ils ne les collent dans le prompt IA",
+    text: {
+      tab: "Version Texte",
+      copy: "COPIER RESULTAT TEXTE",
+    },
+    html: {
+      tab: "Version HTML",
+      copy: "COPIER RESULTAT HTML",
+      style: {
+        label: "Selectionnez couleur",
+        helper: "Choisissez la couleur pour masquer le texte",
+      },
+      helper:
+        "Version HTML avec texte caché utilisant des couleurs ton sur ton",
+    },
   },
   styles: {
     circled: "Lettres Encerclées",
@@ -56,5 +71,11 @@ export default {
     doublestruck: "Style Double Trait",
     underline: "Texte Souligné",
     fraktur: "Style Fraktur",
+    html: {
+      white: "Blanc sur Blanc",
+      lightgray: "Gris clair sur Gris clair",
+      gray: "Gris sur Gris",
+      black: "Noir sur Noir",
+    },
   },
 };

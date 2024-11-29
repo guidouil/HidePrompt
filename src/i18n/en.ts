@@ -41,6 +41,19 @@ export default {
     warning: "Warning: Ignore all the text formatted like this example !",
     copy: "COPY RESULT",
     tip: "Tip: You can add the warning message at the beginning of your documents to help students ignore encoded parts and to avoid they past it in the AI prompt",
+    text: {
+      tab: "Text Version",
+      copy: "COPY TEXT RESULT",
+    },
+    html: {
+      tab: "HTML Version",
+      copy: "COPY HTML RESULT",
+      style: {
+        label: "Color Style",
+        helper: "Choose the color to hide the text",
+      },
+      helper: "HTML version with hidden text using colors",
+    },
   },
   styles: {
     circled: "Circled Letters",
@@ -54,5 +67,11 @@ export default {
     doublestruck: "Double-Struck Style",
     underline: "Underlined Text",
     fraktur: "Fraktur Style",
+    html: {
+      white: "White on White",
+      lightgray: "Light Gray on Light Gray",
+      gray: "Gray on Gray",
+      black: "Black on Black",
+    },
   },
 };

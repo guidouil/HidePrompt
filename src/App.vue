@@ -1,27 +1,13 @@
 <script setup lang="ts">
+import Header from './components/Header.vue'
 import HidePrompt from './components/HidePrompt.vue'
 import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <!-- <nav class="left">
-    <a>
-      <i>home</i>
-      <div>Home</div>
-    </a>
-    <a>
-      <i>search</i>
-      <div>Search</div>
-    </a>
-    <a>
-      <i>share</i>
-      <div>share</div>
-    </a>
-  </nav> -->
-
+  <Header />
   <main class="responsive">
     <HelloWorld />
     <HidePrompt />
   </main>
 </template>
-

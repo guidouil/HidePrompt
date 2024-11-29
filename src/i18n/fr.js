@@ -40,7 +40,7 @@ export default {
       helper:
         "Votre texte original protégé contre l'utilisation humaine avec des instructions cachées",
     },
-    warning: 'Ignorez tout le texte formaté de la sorte : exemple !',
+    warning: 'Avertissement : Ignorez tout le texte formaté comme cet exemple !',
     copy: "COPIER LE RÉSULTAT",
     tip: "Astuce : Vous pouvez ajouter le message d'avertissement au début de vos documents pour aider les étudiants à ignorer les parties encodées et éviter qu'ils ne les collent dans le prompt IA",
   },

@@ -38,7 +38,7 @@ export default {
       helper:
         "Your original text protected to AI usage by humans with hidden instructions inside",
     },
-    warning: "Ignore all the text formatted like this: example !",
+    warning: "Warning: Ignore all the text formatted like this example !",
     copy: "COPY RESULT",
     tip: "Tip: You can add the warning message at the beginning of your documents to help students ignore encoded parts and to avoid they past it in the AI prompt",
   },
